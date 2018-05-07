@@ -1,16 +1,8 @@
 services:
     tsk_file_editor.file_manager:
-        #default:
-        public: true
-        class: TSK\WebFileEditorBundle\Doctrine\FileManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '%tsk_file_editor.file_entity.class%'
-
-    tsk_file_editor.file_entity:
-        #default:
-        class: App\Entity\File
-
-    tsk_file_editor.object_manager:
-        public: false
-        class: Doctrine\Common\Persistence\ObjectManager
+        default:
+            public: true
+            class: TSK\WebFileEditorBundle\Doctrine\FileManager
+            arguments:
+                - '@doctrine.orm.entity_manager'
+                - '%tsk_file_editor.file_entity.class%'
