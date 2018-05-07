@@ -1,0 +1,8 @@
+services:
+    TSK\WebFileEditorBundle\Command\GenerateCredentialsCommand:
+        public: false
+        tags: [console.command]
+
+    google.client:
+        public: true
+        class: \Google_Client

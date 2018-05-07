@@ -1,0 +1,7 @@
+services:
+    tsk_file_editor.file.controller:
+        public: true
+        class: TSK\WebFileEditorBundle\Controller\FileController
+        arguments:
+            - '@event_dispatcher'
+            - '@tsk_file_editor.file_manager'

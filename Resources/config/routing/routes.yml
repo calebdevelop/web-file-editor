@@ -1,0 +1,3 @@
+tsk_file_editor_list:
+    path: /list
+    controller: tsk_file_editor.file.controller:listAction

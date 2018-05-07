@@ -1,0 +1,36 @@
+{
+  "name": "tarask/web-file-editor",
+  "type": "symfony-bundle",
+  "description": "Web file editor",
+  "keywords": ["Web file editor"],
+  "homepage": "https://github.com/calebdevelop/web-file-editor",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Caleb RAJAONARY",
+      "email": "calebdevelop@gmail.com"
+    }
+  ],
+  "require": {
+    "google/apiclient": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TSK\\WebFileEditorBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TSK\\WebFileEdiditorBundle\\Tests\\": "/Tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}
