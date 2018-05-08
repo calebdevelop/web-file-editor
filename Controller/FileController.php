@@ -13,20 +13,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use TSK\WebFileEditorBundle\Entity\FileManagerInterface;
+use TSK\WebFileEditorBundle\Form\Factory\FactoryInterface;
 
 class FileController extends Controller
 {
     private $eventDispatcher;
 
+    private $formFactory;
+
     private $fileManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, FileManagerInterface $fileManager)
+    public function __construct(EventDispatcherInterface $eventDispatcher, FactoryInterface $formFactory, FileManagerInterface $fileManager)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->formFactory = $formFactory;
         $this->fileManager = $fileManager;
     }
 
     public function listAction(){
-        return new Response('hello');
+
+        return $this->render('@TSKWebFileEditor/list_file.html.twig', array(
+
+        ));
+    }
+
+    public function addAction(){
+
+        return $this->render('@TSKWebFileEditor/add_file.html.twig', array(
+
+        ));
     }
 }

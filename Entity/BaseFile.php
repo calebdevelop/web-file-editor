@@ -3,6 +3,7 @@
 namespace TSK\WebFileEditorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 abstract class BaseFile
 {
@@ -27,6 +28,14 @@ abstract class BaseFile
      * @ORM\Column(type="string", length=255)
      */
     protected $contentType;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the file.")
+     * @Assert\File()
+     */
+    protected $file;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -75,6 +84,18 @@ abstract class BaseFile
     public function setContentType(string $contentType): self
     {
         $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
 
         return $this;
     }

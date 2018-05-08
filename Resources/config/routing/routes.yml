@@ -1,3 +1,7 @@
 tsk_file_editor_list:
-    path: /list
+    path: /
     controller: tsk_file_editor.file.controller:listAction
+
+tsk_file_editor_add:
+    path: /add
+    controller: tsk_file_editor.file.controller:addAction
