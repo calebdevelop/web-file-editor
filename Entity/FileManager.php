@@ -11,5 +11,13 @@ namespace TSK\WebFileEditorBundle\Entity;
 
 abstract class FileManager implements FileManagerInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function createFile($name = '')
+    {
+        $class = $this->getClass();
 
+        return new $class($name);
+    }
 }

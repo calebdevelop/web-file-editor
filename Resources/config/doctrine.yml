@@ -1,8 +1,0 @@
-services:
-    tsk_file_editor.file_manager:
-        #default:
-        public: true
-        class: TSK\WebFileEditorBundle\Doctrine\FileManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - ''

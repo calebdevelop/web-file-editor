@@ -11,10 +11,10 @@ namespace TSK\WebFileEditorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use TSK\WebFileEditorBundle\Form\Type\BaseFileType;
 
 class Configuration implements ConfigurationInterface
 {
-
     /**
      * Generates the configuration tree builder.
      *
@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+
         $rootNode = $treeBuilder->root('file_editor');
 
         $rootNode
@@ -31,6 +32,13 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('file_class')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('file_manager')->end()
+                        ->scalarNode('upload_dir')->isRequired()->cannotBeEmpty()->end()
+                        ->arrayNode('form')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('type')->isRequired()->defaultValue(BaseFileType::class)->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

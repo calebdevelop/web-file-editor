@@ -11,5 +11,5 @@ namespace TSK\WebFileEditorBundle\Entity;
 
 interface FileManagerInterface
 {
-
+    public function getClass();
 }

@@ -1,9 +1,22 @@
 services:
+    tsk_file_editor.file_uploader:
+        class: TSK\WebFileEditorBundle\Service\FileUploader
+        arguments:
+            $targetDirectory: '%file_editor.file.upload_dir%'
+
+    tsk_file_editor.file.form.type:
+        public: true
+        class: TSK\WebFileEditorBundle\Form\Type\BaseFileType
+        arguments:
+            - '%file_editor.file.file_class%'
+
     tsk_file_editor.form_factory:
         public: true
         class: TSK\WebFileEditorBundle\Form\Factory\FormFactory
         arguments:
             - '@form.factory'
+            - '%file_editor.file.form.type%'
+            - '%file_editor.file.file_class%'
 
     tsk_file_editor.file.controller:
         public: true
@@ -12,3 +25,11 @@ services:
             - '@event_dispatcher'
             - '@tsk_file_editor.form_factory'
             - '@tsk_file_editor.file_manager'
+            - '@tsk_file_editor.file_uploader'
+
+    tsk_file_editor.file_manager:
+        public: true
+        class: TSK\WebFileEditorBundle\Doctrine\FileManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%file_editor.file.file_class%'

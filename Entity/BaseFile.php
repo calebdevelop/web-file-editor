@@ -5,7 +5,7 @@ namespace TSK\WebFileEditorBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-abstract class BaseFile
+abstract class BaseFile implements FileInterface
 {
     /**
      * @ORM\Id()

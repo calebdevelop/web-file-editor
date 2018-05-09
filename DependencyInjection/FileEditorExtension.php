@@ -16,35 +16,40 @@ use TSK\WebFileEditorBundle\Util\GoogleDriveConfig;
 
 class FileEditorExtension extends Extension
 {
+    private function remapParameters(string $parameter, array $config, ContainerBuilder $container, array $arrayValue = []){
+        foreach ($config as $key => $value){
+            if(is_array($value) && in_array($key, $arrayValue)){
+                $container->setParameter( $parameter.'.'.$key, $value);
+            }elseif(is_array($value) && !in_array($key, $arrayValue)){
+                $this->remapParameters($parameter.'.'.$key, $value, $container, $arrayValue);
+            }else{
+                $container->setParameter( $parameter.'.'.$key, $value);
+            }
+        }
+    }
+
+    private function loadFile(array $config, ContainerBuilder $container, YamlFileLoader $loader){
+        $this->remapParameters('file_editor.file', $config, $container);
+        $loader->load('file.yml');
+    }
+
     /**
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('console.yml');
-        $loader->load('doctrine.yml');
-
-        $loader->load('file.yml');
-
-
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('console.yml');
+        $this->loadFile($config['file'], $container, $loader);
 
-        //tsk_file_editor.file_manager
-        $fileMagagerDefinition = $container->getDefinition('tsk_file_editor.file_manager');
-        $fileMagagerDefinition->replaceArgument(1, $config['file']['file_class']);
 
 
 
         if (!empty($config['google'])) {
             $this->loadGoogleClient($config['google'], $container);
         }
-
-
-
-
-
     }
 
     private function loadGoogleClient(array $config, ContainerBuilder $container){

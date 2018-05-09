@@ -10,6 +10,7 @@ namespace TSK\WebFileEditorBundle\Doctrine;
 
 use App\Entity\File;
 use Doctrine\Common\Persistence\ObjectManager;
+use TSK\WebFileEditorBundle\Entity\FileInterface;
 use TSK\WebFileEditorBundle\Entity\FileManager as BaseFileManager;
 
 class FileManager extends BaseFileManager
@@ -36,5 +37,24 @@ class FileManager extends BaseFileManager
 
         $metadata = $om->getClassMetadata($class);
         $this->class = $metadata->getName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateFile(FileInterface $group, $andFlush = true)
+    {
+        $this->objectManager->persist($group);
+        if ($andFlush) {
+            $this->objectManager->flush();
+        }
     }
 }
