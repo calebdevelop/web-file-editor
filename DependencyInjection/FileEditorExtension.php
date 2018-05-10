@@ -42,10 +42,10 @@ class FileEditorExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('console.yml');
-        $this->loadFile($config['file'], $container, $loader);
-
-
-
+        
+        if(isset($config['file'])){
+            $this->loadFile($config['file'], $container, $loader);
+        }
 
         if (!empty($config['google'])) {
             $this->loadGoogleClient($config['google'], $container);
