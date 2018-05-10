@@ -36,8 +36,6 @@ class FileController extends Controller
     }
 
     public function listAction(){
-
-
         return $this->render('@TSKWebFileEditor/list_file.html.twig', array(
 
         ));
