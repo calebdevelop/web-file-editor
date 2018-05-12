@@ -1,0 +1,4 @@
+services:
+    google.client:
+        public: true
+        class: \Google_Client
