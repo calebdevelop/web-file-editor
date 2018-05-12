@@ -5,3 +5,7 @@ tsk_file_editor_list:
 tsk_file_editor_add:
     path: /add
     controller: tsk_file_editor.file.controller:addAction
+
+tsk_file_editor_view:
+    path: /view/{fileId}
+    controller: tsk_file_editor.file.controller:viewAction

@@ -47,6 +47,10 @@ class FileManager extends BaseFileManager
         return $this->class;
     }
 
+    public function find($id){
+        return $this->repository->find($id);
+    }
+
     /**
      * {@inheritdoc}
      */

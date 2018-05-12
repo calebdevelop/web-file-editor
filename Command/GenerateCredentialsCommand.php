@@ -43,10 +43,14 @@ class GenerateCredentialsCommand extends Command
             ]);
             $authCode = $input->getArgument('code');
             $accessToken = $this->container->get('google.client')->fetchAccessTokenWithAuthCode($authCode);
+
+            print_r($accessToken);
             $yaml = Yaml::dump(
                 [
-                    'parameters' => [
-                        'tsk.google_client.token' => $accessToken
+                    'file_editor' => [
+                        'google' => [
+                            'token' => $accessToken
+                        ]
                     ]
                 ]
             );
@@ -93,6 +97,7 @@ class GenerateCredentialsCommand extends Command
             $authUrl
         ]);
 
+        $questions = array();
         if (!$input->getArgument('code')) {
             $question = new Question('Paste the google code for get token : ');
             $question->setValidator(function ($code) {

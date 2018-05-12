@@ -18,6 +18,7 @@ class FileEditorExtension extends Extension
 {
     private function remapParameters(string $parameter, array $config, ContainerBuilder $container, array $arrayValue = []){
         foreach ($config as $key => $value){
+            //print_r($value);
             if(is_array($value) && in_array($key, $arrayValue)){
                 $container->setParameter( $parameter.'.'.$key, $value);
             }elseif(is_array($value) && !in_array($key, $arrayValue)){
@@ -40,19 +41,24 @@ class FileEditorExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('console.yml');
         
         if(isset($config['file'])){
             $this->loadFile($config['file'], $container, $loader);
         }
 
         if (!empty($config['google'])) {
-            $this->loadGoogleClient($config['google'], $container);
+            $this->loadGoogleClient($config['google'], $container, $loader);
         }
+
+        $loader->load('console.yml');
     }
 
-    private function loadGoogleClient(array $config, ContainerBuilder $container){
+    private function loadGoogleClient(array $config, ContainerBuilder $container, YamlFileLoader $loader){
+        $this->remapParameters('file_editor.google', $config, $container, ['token']);
+        $loader->load('google.yml');
+
         $googleClient = $container->getDefinition('google.client');
         $googleClient->addMethodCall('setApplicationName', ['Google Drive API']);
         $googleClient->addMethodCall('setScopes', [GoogleDriveConfig::$allscope]);
@@ -60,8 +66,8 @@ class FileEditorExtension extends Extension
         $googleClient->addMethodCall('setAuthConfig', [$projectDir.'/config/client_secret.json']);
         $googleClient->addMethodCall('setAccessType', ['offline']);
 
-        if($container->hasParameter('tsk.google_client.token')){
-            $token = $container->getParameter('tsk.google_client.token');
+        if($container->hasParameter('file_editor.google.token')){
+            $token = $container->getParameter('file_editor.google.token');
             $googleClient->addMethodCall('setAccessToken', [$token]);
         }
     }

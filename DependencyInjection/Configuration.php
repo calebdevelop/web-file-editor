@@ -9,6 +9,7 @@
 namespace TSK\WebFileEditorBundle\DependencyInjection;
 
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use TSK\WebFileEditorBundle\Form\Type\BaseFileType;
@@ -44,6 +45,31 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $this->googleConfig($rootNode);
+
         return $treeBuilder;
+    }
+
+    private function googleConfig(ArrayNodeDefinition $node){
+        $node
+            ->children()
+                ->arrayNode('google')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('token')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('access_token')->isRequired()->defaultValue('')->end()
+                                ->scalarNode('token_type')->isRequired()->defaultValue('Bearer')->end()
+                                ->scalarNode('expires_in')->isRequired()->defaultValue(3600)->end()
+                                ->scalarNode('refresh_token')->isRequired()->defaultValue('')->end()
+                                ->scalarNode('created')->isRequired()->defaultValue(1525624344)->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

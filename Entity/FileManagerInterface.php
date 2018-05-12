@@ -12,4 +12,6 @@ namespace TSK\WebFileEditorBundle\Entity;
 interface FileManagerInterface
 {
     public function getClass();
+
+    public function find($id);
 }
